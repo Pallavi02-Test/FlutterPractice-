@@ -27,13 +27,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'HOME PAGE',
+      style: optionStyle,
+    ),
+    Text(
+      'COURSE PAGE',
+      style: optionStyle,
+    ),
+    Text(
+      'CONTACT GFG',
+      style: optionStyle,
+    ),
+  ];
+ 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(child: Image.asset("assets/RK.jpg")),
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex),),
       drawer: Drawer(
         child: ListView(
           children: const <Widget>[
@@ -61,7 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
           fixedColor: Colors.blue,
           items: [
             BottomNavigationBarItem(
@@ -77,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.account_circle),
             ),
           ],
-          onTap: (int indexOfItem) {}),
-    );
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+    ));
   }
 }
